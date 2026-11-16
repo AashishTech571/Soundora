@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090914">
+  <title>Soundora - Feel Every Beat</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>🎧 SOUNDORA</h1>
+  <p>Feel Every Beat.</p>
+</header>
+
+<main>
+  <input type="search" id="search"
+    placeholder="🔍 Search your music...">
+
+  <section class="banner">
+    <p>WELCOME TO SOUNDORA</p>
+    <h2>Music is Your World.</h2>
+    <p>Discover music. Feel the rhythm.</p>
+  </section>
+
+  <h2>🔥 Trending Music</h2>
+  <div id="songList"></div>
+</main>
+
+<footer>
+  <div id="nowPlaying">Welcome to Soundora 🎵</div>
+  <div class="controls">
+    <button onclick="previousSong()">⏮</button>
+    <button onclick="togglePlay()" id="playBtn">▶</button>
+    <button onclick="nextSong()">⏭</button>
+  </div>
+  <nav>
+    <span>🏠 Home</span>
+    <span>🔍 Search</span>
+    <span>❤️ Library</span>
+  </nav>
+</footer>
+
+<audio id="audioPlayer"></audio>
+<script src="script.js"></script>
+</body>
+</html>
