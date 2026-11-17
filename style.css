@@ -180,3 +180,61 @@ nav {
     margin: auto;
   }
 }
+
+.player {
+  padding: 14px 18px;
+  background: rgba(12, 10, 20, 0.97);
+  border-top: 1px solid #292238;
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.player-cover {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #352052, #130f20);
+  display: grid;
+  place-items: center;
+  font-size: 25px;
+}
+
+.player-info > div:nth-child(2) {
+  flex: 1;
+}
+
+.player-info small {
+  color: #aaa;
+}
+
+#favoriteBtn {
+  background: transparent;
+  color: #d8b8ff;
+  border: 0;
+  font-size: 25px;
+}
+
+.progress-area {
+  margin-top: 12px;
+}
+
+#progressBar {
+  width: 100%;
+  accent-color: #a66cff;
+  cursor: pointer;
+}
+
+.time-row {
+  display: flex;
+  justify-content: space-between;
+  color: #aaa;
+  font-size: 11px;
+}
+
+.player .controls {
+  margin: 8px 0;
+}
