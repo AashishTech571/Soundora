@@ -238,3 +238,119 @@ nav {
 .player .controls {
   margin: 8px 0;
 }
+
+/* SOUNDORA Premium Player */
+
+.player {
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
+  width: 100%;
+  padding: 18px;
+  background: rgba(12, 12, 16, 0.96);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 -10px 35px rgba(0,0,0,0.45);
+  color: white;
+  border-radius: 20px 20px 0 0;
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.player-cover {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: linear-gradient(135deg,#252536,#09090d);
+  display: grid;
+  place-items: center;
+  font-size: 25px;
+  color: white;
+  border: 1px solid #444;
+}
+
+#favoriteBtn {
+  margin-left: auto;
+  background: transparent;
+  color: white;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.progress-area {
+  margin-top: 14px;
+}
+
+#progressBar {
+  width: 100%;
+  accent-color: #a78bfa;
+  cursor: pointer;
+}
+
+.time-row {
+  display: flex;
+  justify-content: space-between;
+  color: #aaa;
+  font-size: 11px;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 28px;
+  margin: 12px 0;
+}
+
+.controls button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 23px;
+  cursor: pointer;
+}
+
+.controls .play {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: white;
+  color: black;
+  font-size: 20px;
+}
+
+.player nav {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 12px;
+  border-top: 1px solid #292929;
+}
+
+.player nav span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  color: #999;
+  cursor: pointer;
+  font-size: 19px;
+}
+
+.player nav small {
+  font-size: 10px;
+}
+
+.player nav .active {
+  color: #c4a7ff;
+}
+
+@media (max-width: 600px) {
+  .player {
+    padding: 13px;
+  }
+}
