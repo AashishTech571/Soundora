@@ -76,21 +76,39 @@
 </main>
 
 <footer class="player">
-  <div id="nowPlaying">Choose a song to begin 🎵</div>
+  
+<footer class="player">
+  <div class="player-info">
+    <div class="player-cover" id="playerCover">♫</div>
+    <div>
+      <div id="nowPlaying">Choose a song 🎵</div>
+      <small id="playerArtist">SOUNDORA</small>
+    </div>
+    <button id="favoriteBtn" onclick="toggleFavorite()">♡</button>
+  </div>
+
+  <div class="progress-area">
+    <input type="range" id="progressBar" value="0" min="0" max="100">
+    <div class="time-row">
+      <span id="currentTime">0:00</span>
+      <span id="duration">0:00</span>
+    </div>
+  </div>
 
   <div class="controls">
-    <button onclick="previousSong()" aria-label="Previous">⏮</button>
-    <button onclick="togglePlay()" id="playBtn" class="play"
-      aria-label="Play or pause">▶</button>
-    <button onclick="nextSong()" aria-label="Next">⏭</button>
+    <button onclick="previousSong()">⏮</button>
+    <button onclick="togglePlay()" id="playBtn" class="play">▶</button>
+    <button onclick="nextSong()">⏭</button>
   </div>
 
   <nav>
     <span class="active">⌂<small>Home</small></span>
     <span onclick="document.getElementById('search').focus()">⌕<small>Search</small></span>
-    <span>♡<small>Library</small></span>
+    <span onclick="showFavorites()">♡<small>Library</small></span>
     <span>♙<small>Profile</small></span>
   </nav>
+</footer>
+
 </footer>
 
 <audio id="audioPlayer" preload="none"></audio>
