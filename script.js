@@ -281,3 +281,82 @@ window.playSong = playSong;
 window.toggleFavorite = toggleFavorite;
 window.showFavorites = showFavorites;
 
+/* SOUNDORA FAVORITES SYSTEM */
+
+let favorites = JSON.parse(
+  localStorage.getItem("soundoraFavorites") || "[]"
+);
+
+function saveFavorites() {
+  localStorage.setItem(
+    "soundoraFavorites",
+    JSON.stringify(favorites)
+  );
+}
+
+function toggleFavorite() {
+  if (typeof currentSongIndex === "undefined") return;
+
+  const song = songs[currentSongIndex];
+  if (!song) return;
+
+  const songId = song.id || song.title;
+
+  if (favorites.includes(songId)) {
+    favorites = favorites.filter(id => id !== songId);
+  } else {
+    favorites.push(songId);
+  }
+
+  saveFavorites();
+  updateFavoriteButton();
+}
+
+function updateFavoriteButton() {
+  const button = document.getElementById("favoriteBtn");
+  if (!button || typeof currentSongIndex === "undefined") return;
+
+  const song = songs[currentSongIndex];
+  if (!song) return;
+
+  const songId = song.id || song.title;
+
+  button.textContent = favorites.includes(songId) ? "♥" : "♡";
+  button.style.color = favorites.includes(songId) ? "#ff4d79" : "white";
+}
+
+function showFavorites() {
+  const container = document.getElementById("songList");
+  if (!container) return;
+
+  const favoriteSongs = songs.filter(song =>
+    favorites.includes(song.id || song.title)
+  );
+
+  container.innerHTML = "";
+
+  if (favoriteSongs.length === 0) {
+    container.innerHTML = "<p>No favorite songs yet ♡</p>";
+    return;
+  }
+
+  favoriteSongs.forEach(song => {
+    const index = songs.indexOf(song);
+    const item = document.createElement("div");
+
+    item.className = "song-item";
+    item.textContent = song.title || "Unknown Song";
+    item.style.cursor = "pointer";
+
+    item.addEventListener("click", () => {
+      if (typeof playSong === "function") {
+        playSong(index);
+      }
+    });
+
+    container.appendChild(item);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", updateFavoriteButton);
+
