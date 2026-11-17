@@ -354,3 +354,54 @@ nav {
     padding: 13px;
   }
 }
+
+/* SOUNDORA PREMIUM LIBRARY */
+
+#songList {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.song-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  min-height: 65px;
+  border-radius: 15px;
+  background: linear-gradient(120deg, #191923, #101016);
+  border: 1px solid rgba(255,255,255,0.07);
+  color: #fff;
+  transition: 0.25s ease;
+}
+
+.song-item:hover {
+  transform: translateY(-3px);
+  border-color: #9875ff;
+  background: #22202f;
+}
+
+#songList p {
+  text-align: center;
+  color: #aaa;
+  padding: 30px 10px;
+  background: #15151d;
+  border-radius: 15px;
+}
+
+.player nav span {
+  transition: 0.2s ease;
+}
+
+.player nav span:hover {
+  color: #b99aff;
+  transform: translateY(-2px);
+}
+
+#favoriteBtn {
+  transition: transform 0.2s ease;
+}
+
+#favoriteBtn:active {
+  transform: scale(1.3);
+}
