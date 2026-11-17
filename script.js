@@ -176,3 +176,108 @@ window.togglePlay = togglePlay;
 window.nextSong = nextSong;
 window.previousSong = previousSong;
 
+// SOUNDORA PREMIUM PLAYER
+
+let favorites = [];
+
+function formatTime(seconds) {
+  if (!Number.isFinite(seconds)) return "0:00";
+
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+
+  return `${mins}:${String(secs).padStart(2, "0")}`;
+}
+
+function toggleFavorite() {
+  if (currentIndex === -1) return;
+
+  const song = songs[currentIndex];
+  const index = favorites.indexOf(song.title);
+
+  if (index === -1) {
+    favorites.push(song.title);
+  } else {
+    favorites.splice(index, 1);
+  }
+
+  document.getElementById("favoriteBtn").textContent =
+    favorites.includes(song.title) ? "♥" : "♡";
+}
+
+function showFavorites() {
+  const list = songs.filter(song =>
+    favorites.includes(song.title)
+  );
+
+  songList.innerHTML = "";
+
+  if (list.length === 0) {
+    songList.innerHTML =
+      '<p style="padding:15px;color:#aaa">No favourite songs yet ❤️</p>';
+    return;
+  }
+
+  list.forEach(song => {
+    const index = songs.indexOf(song);
+
+    const item = document.createElement("div");
+    item.className = "song";
+
+    item.innerHTML = `
+      <div class="cover">♥</div>
+      <div class="details">
+        <h3>${song.title}</h3>
+        <p>${song.artist}</p>
+      </div>
+      <button>▶</button>
+    `;
+
+    item.querySelector("button").onclick = () => playSong(index);
+    songList.appendChild(item);
+  });
+}
+
+audio.addEventListener("loadedmetadata", () => {
+  document.getElementById("duration").textContent =
+    formatTime(audio.duration);
+});
+
+audio.addEventListener("timeupdate", () => {
+  const progress = audio.duration
+    ? (audio.currentTime / audio.duration) * 100
+    : 0;
+
+  document.getElementById("progressBar").value = progress;
+
+  document.getElementById("currentTime").textContent =
+    formatTime(audio.currentTime);
+});
+
+document.getElementById("progressBar").addEventListener("input", e => {
+  if (Number.isFinite(audio.duration)) {
+    audio.currentTime =
+      (e.target.value / 100) * audio.duration;
+  }
+});
+
+const originalPlaySong = playSong;
+
+playSong = function(index) {
+  originalPlaySong(index);
+
+  const song = songs[index];
+
+  document.getElementById("playerArtist").textContent =
+    song.artist;
+
+  document.getElementById("favoriteBtn").textContent =
+    favorites.includes(song.title) ? "♥" : "♡";
+
+  document.getElementById("playerCover").textContent = "♫";
+};
+
+window.playSong = playSong;
+window.toggleFavorite = toggleFavorite;
+window.showFavorites = showFavorites;
+
