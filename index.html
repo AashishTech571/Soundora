@@ -73,9 +73,7 @@
     </div>
   </section>
 
-</main>
-
-<footer class="player">
+</main
   
 <footer class="player">
   <div class="player-info">
@@ -94,6 +92,21 @@
       <span id="duration">0:00</span>
     </div>
   </div>
+
+  <div class="controls">
+    <button onclick="previousSong()">⏮</button>
+    <button onclick="togglePlay()" id="playBtn" class="play">▶</button>
+    <button onclick="nextSong()">⏭</button>
+  </div>
+
+  <nav>
+    <span class="active">⌂<small>Home</small></span>
+    <span onclick="document.getElementById('search').focus()">⌕<small>Search</small></span>
+    <span onclick="showFavorites()">♡<small>Library</small></span>
+    <span>♙<small>Profile</small></span>
+  </nav>
+</footer>
+    
 
   <div class="controls">
     <button onclick="previousSong()">⏮</button>
