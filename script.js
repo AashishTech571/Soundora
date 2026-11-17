@@ -1,79 +1,178 @@
 
 const songs = [
-  {name: "Dreams", icon: "🎵", url: ""},
-  {name: "Midnight Vibes", icon: "🌙", url: ""},
-  {name: "Lost in Music", icon: "🎼", url: ""},
-  {name: "Love Beats", icon: "💜", url: ""}
+  {
+    title: "Apna Music 01",
+    artist: "SOUNDORA",
+    category: "Hindi",
+    file: "songs/song1.mp3"
+  },
+  {
+    title: "Apna Music 02",
+    artist: "SOUNDORA",
+    category: "Punjabi",
+    file: "songs/song2.mp3"
+  },
+  {
+    title: "Apna Music 03",
+    artist: "SOUNDORA",
+    category: "Haryanvi",
+    file: "songs/song3.mp3"
+  },
+  {
+    title: "Apna Music 04",
+    artist: "SOUNDORA",
+    category: "Bhojpuri",
+    file: "songs/song4.mp3"
+  }
 ];
 
 const audio = document.getElementById("audioPlayer");
-let currentIndex = 0;
+const songList = document.getElementById("songList");
+const nowPlaying = document.getElementById("nowPlaying");
+const playBtn = document.getElementById("playBtn");
+const search = document.getElementById("search");
 
-function renderSongs(list = songs) {
-  document.getElementById("songList").innerHTML =
-    list.map(song => `
-      <div class="song">
-        <div class="cover">${song.icon}</div>
-        <div class="details">
-          <h3>${song.name}</h3>
-          <p>Soundora Artist</p>
-        </div>
-        <button onclick="playSong('${song.name}')">▶</button>
-      </div>
-    `).join("");
-}
+let currentIndex = -1;
+let currentCategory = "All";
 
-function playSong(name) {
-  currentIndex = songs.findIndex(s => s.name === name);
-  const song = songs[currentIndex];
+function renderSongs() {
+  const query = search.value.toLowerCase();
 
-  if (!song.url) {
-    document.getElementById("nowPlaying").innerText =
-      name + " - Audio coming soon";
+  const filtered = songs
+    .map((song, index) => ({ ...song, index }))
+    .filter(song => {
+      const matchesSearch =
+        song.title.toLowerCase().includes(query) ||
+        song.artist.toLowerCase().includes(query);
+
+      const matchesCategory =
+        currentCategory === "All" ||
+        song.category === currentCategory;
+
+      return matchesSearch && matchesCategory;
+    });
+
+  songList.innerHTML = "";
+
+  if (filtered.length === 0) {
+    songList.innerHTML =
+      '<p style="color:#aaa;padding:15px">No songs found.</p>';
     return;
   }
 
-  audio.src = song.url;
-  audio.play();
-  document.getElementById("nowPlaying").innerText = name;
+  filtered.forEach(song => {
+    const item = document.createElement("div");
+    item.className = "song";
+
+    item.innerHTML = `
+      <div class="cover">♫</div>
+      <div class="details">
+        <h3>${song.title}</h3>
+        <p>${song.artist} • ${song.category}</p>
+      </div>
+      <button class="song-play" aria-label="Play song">▶</button>
+    `;
+
+    item.querySelector("button").addEventListener("click", () => {
+      playSong(song.index);
+    });
+
+    item.addEventListener("dblclick", () => {
+      playSong(song.index);
+    });
+
+    songList.appendChild(item);
+  });
+}
+
+function playSong(index) {
+  currentIndex = index;
+  const song = songs[currentIndex];
+
+  audio.src = song.file;
+  nowPlaying.textContent = `${song.title} — ${song.artist}`;
+
+  audio.play()
+    .then(() => {
+      playBtn.textContent = "Ⅱ";
+    })
+    .catch(() => {
+      playBtn.textContent = "▶";
+      nowPlaying.textContent =
+        `${song.title} — Audio file not found. Add ${song.file}`;
+    });
 }
 
 function togglePlay() {
+  if (currentIndex === -1) {
+    playSong(0);
+    return;
+  }
+
   if (audio.paused) {
-    if (!audio.src) {
-      playSong(songs[currentIndex].name);
-    } else {
-      audio.play();
-    }
+    audio.play()
+      .then(() => playBtn.textContent = "Ⅱ")
+      .catch(() => {
+        nowPlaying.textContent = "Audio file not available.";
+      });
   } else {
     audio.pause();
+    playBtn.textContent = "▶";
   }
 }
 
 function nextSong() {
-  currentIndex = (currentIndex + 1) % songs.length;
-  playSong(songs[currentIndex].name);
+  if (currentIndex === -1) {
+    playSong(0);
+    return;
+  }
+
+  playSong((currentIndex + 1) % songs.length);
 }
 
 function previousSong() {
-  currentIndex =
-    (currentIndex - 1 + songs.length) % songs.length;
-  playSong(songs[currentIndex].name);
+  if (currentIndex === -1) {
+    playSong(0);
+    return;
+  }
+
+  playSong((currentIndex - 1 + songs.length) % songs.length);
 }
-
-document.getElementById("search").addEventListener("input", e => {
-  const query = e.target.value.toLowerCase();
-  renderSongs(songs.filter(s => s.name.toLowerCase().includes(query)));
-});
-
-audio.addEventListener("play", () => {
-  document.getElementById("playBtn").innerText = "⏸";
-});
-
-audio.addEventListener("pause", () => {
-  document.getElementById("playBtn").innerText = "▶";
-});
 
 audio.addEventListener("ended", nextSong);
 
+audio.addEventListener("pause", () => {
+  playBtn.textContent = "▶";
+});
+
+audio.addEventListener("play", () => {
+  playBtn.textContent = "Ⅱ";
+});
+
+search.addEventListener("input", renderSongs);
+
+document.querySelectorAll(".category").forEach(button => {
+  button.addEventListener("click", () => {
+    const category = button.dataset.category;
+
+    currentCategory =
+      currentCategory === category ? "All" : category;
+
+    document.querySelectorAll(".category").forEach(item => {
+      item.classList.toggle(
+        "selected",
+        item.dataset.category === currentCategory
+      );
+    });
+
+    renderSongs();
+  });
+});
+
 renderSongs();
+
+window.playSong = playSong;
+window.togglePlay = togglePlay;
+window.nextSong = nextSong;
+window.previousSong = previousSong;
+
