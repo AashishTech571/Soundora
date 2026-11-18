@@ -473,12 +473,7 @@ renderSongs();
 updateFavoriteButton();
 /* SHUFFLE & REPEAT ACTIVE EFFECT */
 
-#shuffleBtn.active,
-#repeatBtn.active {
-  color: #bd8cff;
-  background: rgba(160, 100, 255, 0.18);
-  border: 1px solid #a66cff;
-  box-shadow: 0 0 12px rgba(166, 108, 255, 0.25);
+
 }
 /* SOUNDORA SPLASH SCREEN */
 
