@@ -48,7 +48,8 @@ let showingFavorites = false;
 let favorites = JSON.parse(
   localStorage.getItem("soundoraFavorites") || "[]"
 );
-
+let isShuffle = false;
+let repeatMode = "off";
 function saveFavorites() {
   localStorage.setItem(
     "soundoraFavorites",
@@ -239,7 +240,8 @@ function updateFavoriteButton() {
   favoriteBtn.classList.toggle("is-favorite", isFavorite);
 }
 
-function toggleFavorite() {
+filter(id => id !== songId);
+    showMessage("Removed function toggleFavorite() {
   if (currentSongIndex === -1) {
     showMessage("Choose a song first.");
     return;
@@ -248,8 +250,7 @@ function toggleFavorite() {
   const songId = songs[currentSongIndex].id;
 
   if (favorites.includes(songId)) {
-    favorites = favorites.filter(id => id !== songId);
-    showMessage("Removed from Favorites");
+    favorites = favorites.from Favorites");
   } else {
     favorites.push(songId);
     showMessage("Added to Favorites ♥");
@@ -366,7 +367,37 @@ document.getElementById("previousBtn").addEventListener(
   "click",
   previousSong
 );
+/* SHUFFLE */
 
+const shuffleBtn = document.getElementById("shuffleBtn");
+
+shuffleBtn.addEventListener("click", () => {
+  isShuffle = !isShuffle;
+
+  shuffleBtn.classList.toggle("active", isShuffle);
+
+  showMessage(
+    isShuffle ? "Shuffle ON" : "Shuffle OFF"
+  );
+});
+
+/* REPEAT */
+
+const repeatBtn = document.getElementById("repeatBtn");
+
+repeatBtn.addEventListener("click", () => {
+  if (repeatMode === "off") {
+    repeatMode = "all";
+  } else if (repeatMode === "all") {
+    repeatMode = "one";
+  } else {
+    repeatMode = "off";
+  }
+
+  repeatBtn.classList.toggle("active", repeatMode !== "off");
+
+  showMessage("Repeat: " + repeatMode.toUpperCase());
+});
 /* AUDIO EVENTS */
 
 audio.addEventListener("play", () => {
@@ -379,7 +410,14 @@ audio.addEventListener("pause", () => {
   renderSongs();
 });
 
-audio.addEventListener("ended", nextSong);
+audio.addEventListener("ended", () => {
+  if (repeatMode === "one") {
+    audio.currentTime = 0;
+    audio.play();
+  } else {
+    nextSong();
+  }
+});
 
 audio.addEventListener("error", () => {
   playBtn.textContent = "▶";
@@ -434,5 +472,13 @@ document.getElementById("volumeControl").addEventListener(
 audio.volume = 0.8;
 renderSongs();
 updateFavoriteButton();
+/* SHUFFLE & REPEAT ACTIVE EFFECT */
 
+#shuffleBtn.active,
+#repeatBtn.active {
+  color: #bd8cff;
+  background: rgba(160, 100, 255, 0.18);
+  border: 1px solid #a66cff;
+  box-shadow: 0 0 12px rgba(166, 108, 255, 0.25);
+}
 
