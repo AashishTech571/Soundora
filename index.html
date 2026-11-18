@@ -39,24 +39,7 @@
 </div>
   <main class="main-content">
     <!-- SOUNDORA GUEST PROFILE -->
-<section class="section guest-profile">
-  <div class="section-heading">
-    <div>
-      <p class="eyebrow">YOUR ACCOUNT</p>
-      <h2>Guest Profile</h2>
-    </div>
-    <span class="song-count">ACTIVE</span>
-  </div>
 
-  <div class="guest-card">
-    <div class="guest-avatar">♫</div>
-    <div>
-      <h3>SOUNDORA Guest</h3>
-      <p>Guest Mode · Active</p>
-      <strong id="guestIdDisplay">Loading ID...</strong>
-    </div>
-    <button id="copyGuestId">Copy ID</button>
-  </div>
 </section>
     <section class="hero">
       <div class="hero-copy">
@@ -107,6 +90,23 @@
       <div class="song-list" id="songList"></div>
       <p class="empty-message" id="emptyMessage" hidden>No songs found.</p>
     </section>
+    <!-- PROFILE PAGE -->
+<section class="main-content" id="profilePage" hidden>
+  <section class="section">
+    <p class="eyebrow">YOUR ACCOUNT</p>
+    <h2>My Profile</h2>
+
+    <div class="guest-card">
+      <div class="guest-avatar">♫</div>
+      <div>
+        <h3>SOUNDORA Guest</h3>
+        <p>Guest Mode · Active</p>
+        <strong id="guestIdDisplay">Loading ID...</strong>
+      </div>
+      <button id="copyGuestId">Copy ID</button>
+    </div>
+  </section>
+</section>
   </main>
 
   <footer class="player" id="musicPlayer">
@@ -153,6 +153,9 @@
       <button class="nav-item" id="libraryNav">
         <span>♡</span><small>Library</small>
       </button>
+      <button class="nav-item" id="profileNav">
+  <span>◉</span><small>Profile</small>
+</button>
     </nav>
 
     <audio id="audioPlayer" preload="metadata"></audio>
