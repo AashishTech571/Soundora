@@ -746,6 +746,92 @@ button[data-category]:hover {
 .song-item {
     cursor: pointer;
 }
+/* SOUNDORA PREMIUM SPLASH SCREEN */
 
+#splashScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at center, #24103d 0%, #100819 45%, #050505 100%);
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.splash-content {
+  text-align: center;
+  animation: splashAppear 1.2s ease forwards;
+}
+
+.splash-logo {
+  width: 105px;
+  height: 105px;
+  margin: 0 auto 25px;
+  border: 2px solid #b77aff;
+  border-radius: 30px;
+  background: linear-gradient(145deg, #54228a, #160b29);
+  box-shadow: 0 0 25px #9d4dff, 0 0 65px rgba(157,77,255,.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.splash-logo span {
+  font-size: 65px;
+  font-weight: 900;
+  color: white;
+  text-shadow: 0 0 20px #c58aff;
+}
+
+.splash-content h1 {
+  color: white;
+  font-size: 35px;
+  letter-spacing: 5px;
+  margin: 0;
+}
+
+.splash-content p {
+  color: #c28aff;
+  letter-spacing: 5px;
+  font-size: 11px;
+}
+
+.splash-loader {
+  width: 160px;
+  height: 3px;
+  margin: 35px auto 15px;
+  background: #352044;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.splash-loader div {
+  width: 45%;
+  height: 100%;
+  background: #c28aff;
+  box-shadow: 0 0 12px #c28aff;
+  animation: splashLoading 1.5s ease-in-out infinite;
+}
+
+.splash-content small {
+  color: #9e91aa;
+}
+
+@keyframes splashAppear {
+  from { opacity: 0; transform: scale(.85); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes splashLoading {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(230%); }
+}
+
+#splashScreen.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
 
 
