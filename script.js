@@ -474,7 +474,7 @@ updateFavoriteButton();
 /* SHUFFLE & REPEAT ACTIVE EFFECT */
 
 
-}
+
 /* SOUNDORA SPLASH SCREEN */
 
 window.addEventListener("load", () => {
