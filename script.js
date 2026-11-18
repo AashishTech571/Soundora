@@ -481,4 +481,18 @@ updateFavoriteButton();
   border: 1px solid #a66cff;
   box-shadow: 0 0 12px rgba(166, 108, 255, 0.25);
 }
+/* SOUNDORA SPLASH SCREEN */
 
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    const splash = document.getElementById("splashScreen");
+
+    if (splash) {
+      splash.classList.add("hide");
+
+      setTimeout(() => {
+        splash.remove();
+      }, 900);
+    }
+  }, 2200);
+});
