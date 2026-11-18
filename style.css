@@ -707,5 +707,45 @@ button[data-category]:hover {
     }
 }
 
+/* ===== SOUNDORA GENRE ALBUM COVERS ===== */
+
+.song-art[data-category="hindi"] {
+    background: linear-gradient(135deg, #7b2ff7, #24104f);
+}
+
+.song-art[data-category="punjabi"] {
+    background: linear-gradient(135deg, #e85d04, #6a040f);
+}
+
+.song-art[data-category="haryanvi"] {
+    background: linear-gradient(135deg, #008f7a, #003b36);
+}
+
+.song-art[data-category="bhojpuri"] {
+    background: linear-gradient(135deg, #d63384, #4a123b);
+}
+
+.song-art {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    color: white;
+    text-shadow: 0 3px 15px rgba(0,0,0,0.5);
+    isolation: isolate;
+}
+
+.song-art::before {
+    z-index: -1;
+}
+
+.song-art::after {
+    z-index: -1;
+}
+
+.song-item {
+    cursor: pointer;
+}
+
 
 
