@@ -1,4 +1,23 @@
+/* SOUNDORA GUEST ID SYSTEM */
 
+(function () {
+  const storageKey = "soundora_guest_id";
+
+  let guestId = localStorage.getItem(storageKey);
+
+  if (!guestId) {
+    guestId = "GUEST-" + crypto.randomUUID()
+      .replace(/-/g, "")
+      .slice(0, 10)
+      .toUpperCase();
+
+    localStorage.setItem(storageKey, guestId);
+  }
+
+  window.SOUNDORA_GUEST_ID = guestId;
+
+  console.log("SOUNDORA Guest ID:", guestId);
+})();
 /* =================================
    SOUNDORA MUSIC APP
 ================================= */
