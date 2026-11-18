@@ -842,4 +842,45 @@ button[data-category]:hover {
   border: 1px solid #a66cff;
   box-shadow: 0 0 12px rgba(166, 108, 255, 0.25);
 }
+/* GUEST PROFILE */
 
+.guest-card {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: linear-gradient(135deg, #191329, #0d0d18);
+  border: 1px solid #39245a;
+  border-radius: 18px;
+  flex-wrap: wrap;
+}
+
+.guest-avatar {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #39245a;
+  font-size: 25px;
+}
+
+.guest-card h3,
+.guest-card p {
+  margin: 4px 0;
+}
+
+.guest-card strong {
+  color: #bd8cff;
+  font-size: 12px;
+}
+
+.guest-card button {
+  margin-left: auto;
+  padding: 10px 15px;
+  background: #8b4dce;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
