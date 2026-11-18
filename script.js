@@ -229,7 +229,6 @@ function previousSong() {
 function updateFavoriteButton() {
   if (currentSongIndex === -1) {
     favoriteBtn.textContent = "♡";
-    favoriteBtn.classList.remove("is-favorite");
     return;
   }
 
@@ -240,8 +239,7 @@ function updateFavoriteButton() {
   favoriteBtn.classList.toggle("is-favorite", isFavorite);
 }
 
-filter(id => id !== songId);
-    showMessage("Removed function toggleFavorite() {
+function toggleFavorite() {
   if (currentSongIndex === -1) {
     showMessage("Choose a song first.");
     return;
@@ -250,7 +248,8 @@ filter(id => id !== songId);
   const songId = songs[currentSongIndex].id;
 
   if (favorites.includes(songId)) {
-    favorites = favorites.from Favorites");
+    favorites = favorites.filter(id => id !== songId);
+    showMessage("Removed from Favorites");
   } else {
     favorites.push(songId);
     showMessage("Added to Favorites ♥");
