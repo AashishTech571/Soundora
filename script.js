@@ -43,15 +43,20 @@ async function loadSongsFromSupabase() {
     return;
   }
 
-  console.log("SOUNDORA Songs Loaded:", data);
-
   songs = data.map(song => ({
+    id: song.id,
     title: song.title,
     artist: song.artist,
     category: song.category,
-    src: song.audio_url,
+    audio: song.audio_url,
     cover: song.cover_url
   }));
+
+  currentSongIndex = -1;
+
+  renderSongs();
+
+  console.log("SOUNDORA Songs Loaded:", songs);
 }
 
 loadSongsFromSupabase();
@@ -59,35 +64,9 @@ loadSongsFromSupabase();
    SOUNDORA MUSIC APP
 ================================= */
 
-const songs = [
-  {
-    id: 1,
-    title: "Song One",
-    artist: "SOUNDORA Artist",
-    category: "Hindi",
-    audio: "songs/song1.mp3"
-  },
-  {
-    id: 2,
-    title: "Song Two",
-    artist: "SOUNDORA Artist",
-    category: "Punjabi",
-    audio: "songs/song2.mp3"
-  },
-  {
-    id: 3,
-    title: "Song Three",
-    artist: "SOUNDORA Artist",
-    category: "Haryanvi",
-    audio: "songs/song3.mp3"
-  },
-  {
-    id: 4,
-    title: "Song Four",
-    artist: "SOUNDORA Artist",
-    category: "Bhojpuri",
-    audio: "songs/song4.mp3"
-  }
+/* SONGS DATABASE */
+
+let songs = [];
 ];
 
 const audio = document.getElementById("audioPlayer");
