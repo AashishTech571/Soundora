@@ -18,6 +18,18 @@
 
   console.log("SOUNDORA Guest ID:", guestId);
 })();
+/* SOUNDORA SUPABASE CONNECTION */
+
+const SUPABASE_URL = "https://muxjlljrdhkpvtdxikmp.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_zgHfqi6cJ7PDwJeKNJbl3g_gaUhGIcH";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+console.log("SOUNDORA Supabase Connected!");
 /* =================================
    SOUNDORA MUSIC APP
 ================================= */
