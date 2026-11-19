@@ -1,0 +1,211 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOUNDORA Admin</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 25px;
+      background: #090910;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      max-width: 650px;
+      margin: 35px auto;
+      background: #14121f;
+      padding: 25px;
+      border: 1px solid #302442;
+      border-radius: 18px;
+    }
+    h1 { color: #bd8cff; }
+    input, select, button {
+      width: 100%;
+      padding: 13px;
+      margin: 9px 0;
+      border-radius: 9px;
+      border: 1px solid #393044;
+      background: #090910;
+      color: white;
+    }
+    button {
+      background: #8b48c7;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button:disabled { opacity: .5; }
+    .hidden { display: none; }
+    #message { color: #bd8cff; }
+  </style>
+</head>
+
+<body>
+<div class="container">
+  <h1>♫ SOUNDORA</h1>
+  <p>ADMIN CONTROL PANEL</p>
+
+  <section id="loginSection">
+    <h2>Admin Login</h2>
+    <input id="email" type="email" placeholder="Admin Email">
+    <input id="password" type="password" placeholder="Password">
+    <button id="loginBtn">Login</button>
+  </section>
+
+  <section id="adminSection" class="hidden">
+    <h2>Upload New Song</h2>
+
+    <input id="title" placeholder="Song Name">
+    <input id="artist" placeholder="Artist Name">
+
+    <select id="category">
+      <option>Hindi</option>
+      <option>Punjabi</option>
+      <option>Haryanvi</option>
+      <option>Bhojpuri</option>
+    </select>
+
+    <label>Audio File</label>
+    <input id="audioFile" type="file" accept="audio/*">
+
+    <label>Cover Image (Optional)</label>
+    <input id="coverFile" type="file" accept="image/*">
+
+    <button id="uploadBtn">Upload Song</button>
+    <button id="logoutBtn">Logout</button>
+  </section>
+
+  <p id="message"></p>
+</div>
+
+<script>
+const SUPABASE_URL = "https://muxjlljrdhkpvtdxikmp.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_zgHfqi6cJ7PDwJeKNJbl3g_gaUhGIcH";
+
+const ADMIN_UID = "179ff3a7-e045-4abc-a650-fee45f695079";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
+const message = document.getElementById("message");
+
+document.getElementById("loginBtn").onclick = async () => {
+  message.textContent = "Logging in...";
+
+  const { data, error } = await db.auth.signInWithPassword({
+    email: document.getElementById("email").value,
+    password: document.getElementById("password").value
+  });
+
+  if (error) {
+    message.textContent = error.message;
+    return;
+  }
+
+  if (data.user.id !== ADMIN_UID) {
+    await db.auth.signOut();
+    message.textContent = "Not authorized.";
+    return;
+  }
+
+  document.getElementById("loginSection").classList.add("hidden");
+  document.getElementById("adminSection").classList.remove("hidden");
+  message.textContent = "Welcome, Admin!";
+};
+
+document.getElementById("uploadBtn").onclick = async () => {
+  const title = document.getElementById("title").value.trim();
+  const artist = document.getElementById("artist").value.trim();
+  const category = document.getElementById("category").value;
+  const audio = document.getElementById("audioFile").files[0];
+  const cover = document.getElementById("coverFile").files[0];
+  const button = document.getElementById("uploadBtn");
+
+  if (!title || !artist || !audio) {
+    message.textContent = "Enter song name, artist and audio file.";
+    return;
+  }
+
+  if (audio.size > 50 * 1024 * 1024) {
+    message.textContent = "Audio file must be under 50 MB.";
+    return;
+  }
+
+  button.disabled = true;
+  message.textContent = "Uploading audio...";
+
+  try {
+    const audioPath = `audio/${crypto.randomUUID()}-${audio.name}`;
+
+    const { error: audioError } = await db.storage
+      .from("songs")
+      .upload(audioPath, audio);
+
+    if (audioError) throw audioError;
+
+    const { data: audioData } = db.storage
+      .from("songs")
+      .getPublicUrl(audioPath);
+
+    let coverUrl = null;
+
+    if (cover) {
+      const coverPath = `covers/${crypto.randomUUID()}-${cover.name}`;
+
+      const { error: coverError } = await db.storage
+        .from("songs")
+        .upload(coverPath, cover);
+
+      if (coverError) throw coverError;
+
+      coverUrl = db.storage
+        .from("songs")
+        .getPublicUrl(coverPath).data.publicUrl;
+    }
+
+    message.textContent = "Saving song details...";
+
+    const { error: dbError } = await db
+      .from("songs")
+      .insert({
+        title,
+        artist,
+        category,
+        audio_url: audioData.publicUrl,
+        cover_url: coverUrl
+      });
+
+    if (dbError) throw dbError;
+
+    message.textContent = "Song uploaded successfully!";
+
+    document.getElementById("title").value = "";
+    document.getElementById("artist").value = "";
+    document.getElementById("audioFile").value = "";
+    document.getElementById("coverFile").value = "";
+
+  } catch (error) {
+    message.textContent = "Error: " + error.message;
+  } finally {
+    button.disabled = false;
+  }
+};
+
+document.getElementById("logoutBtn").onclick = async () => {
+  await db.auth.signOut();
+  document.getElementById("adminSection").classList.add("hidden");
+  document.getElementById("loginSection").classList.remove("hidden");
+  message.textContent = "Logged out.";
+};
+</script>
+</body>
+</html>
