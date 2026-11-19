@@ -30,6 +30,31 @@ const supabaseClient = window.supabase.createClient(
 );
 
 console.log("SOUNDORA Supabase Connected!");
+/* LOAD SONGS FROM SUPABASE */
+
+async function loadSongsFromSupabase() {
+  const { data, error } = await supabaseClient
+    .from("songs")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Songs loading error:", error.message);
+    return;
+  }
+
+  console.log("SOUNDORA Songs Loaded:", data);
+
+  songs = data.map(song => ({
+    title: song.title,
+    artist: song.artist,
+    category: song.category,
+    src: song.audio_url,
+    cover: song.cover_url
+  }));
+}
+
+loadSongsFromSupabase();
 /* =================================
    SOUNDORA MUSIC APP
 ================================= */
