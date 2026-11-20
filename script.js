@@ -188,6 +188,11 @@ if (song.cover) {
     songList.appendChild(card);
   });
 }
+/* SEARCH SYSTEM */
+
+searchInput.addEventListener("input", () => {
+  renderSongs();
+});
 
 /* PLAY SONG */
 
