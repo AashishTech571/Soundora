@@ -582,25 +582,7 @@ window.addEventListener("load", () => {
     }
   }, 1200);
 });
-/* GUEST PROFILE DISPLAY */
 
-const profileGuestId = document.getElementById("guestIdDisplay");
-const profileCopyBtn = document.getElementById("copyGuestId");
-
-if (profileGuestId) {
-  profileGuestId.textContent = window.SOUNDORA_GUEST_ID;
-}
-
-if (profileCopyBtn) {
-  profileCopyBtn.addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText(window.SOUNDORA_GUEST_ID);
-      profileCopyBtn.textContent = "Copied!";
-    } catch (error) {
-      profileCopyBtn.textContent = "Copy failed";
-    }
-  });
-}
 /* PROFILE PAGE NAVIGATION */
 
 const profilePage = document.getElementById("profilePage");
