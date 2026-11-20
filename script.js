@@ -584,8 +584,7 @@ window.addEventListener("load", () => {
 });
 /* GUEST PROFILE DISPLAY */
 
-const guestIdDisplay = document.getElementById("guestIdDisplay");
-const copyGuestIdBtn = document.getElementById("copyGuestId");
+
 
 if (guestIdDisplay) {
   guestIdDisplay.textContent = window.SOUNDORA_GUEST_ID;
