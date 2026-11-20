@@ -92,6 +92,7 @@
   <p id="message"></p>
 </div>
 
+
 <script>
 const SUPABASE_URL = "https://muxjlljrdhkpvtdxikmp.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_zgHfqi6cJ7PDwJeKNJbl3g_gaUhGIcH";
@@ -105,31 +106,7 @@ const db = window.supabase.createClient(
 
 const message = document.getElementById("message");
 
-document.getElementById("loginBtn").onclick = async () => {
-  message.textContent = "Logging in...";
-
-  const { data, error } = await db.auth.signInWithPassword({
-    email: document.getElementById("email").value,
-    password: document.getElementById("password").value
-  });
-
-  if (error) {
-    message.textContent = error.message;
-    return;
-  }
-
-  if (data.user.id !== ADMIN_UID) {
-    await db.auth.signOut();
-    message.textContent = "Not authorized.";
-    return;
-  }
-
-  document.getElementById("loginSection").classList.add("hidden");
-  document.getElementById("adminSection").classList.remove("hidden");
-  message.textContent = "Welcome, Admin!";
-  };
-  loadAdminSongs();
-  /* LOAD AND DISPLAY UPLOADED SONGS */
+/* LOAD AND DISPLAY SONGS */
 
 async function loadAdminSongs() {
   const songsList = document.getElementById("songsList");
@@ -155,6 +132,7 @@ async function loadAdminSongs() {
 
   data.forEach(song => {
     const item = document.createElement("div");
+
     item.style.cssText =
       "padding:12px;margin:10px 0;background:#090910;border:1px solid #393044;border-radius:10px;";
 
@@ -164,68 +142,41 @@ async function loadAdminSongs() {
     const artist = document.createElement("p");
     artist.textContent = song.artist + " • " + song.category;
 
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Delete Song";
-    deleteBtn.style.background = "#a83250";
-    deleteBtn.onclick = () => deleteAdminSong(song);
-
-    item.append(name, artist, deleteBtn);
+    item.append(name, artist);
     songsList.appendChild(item);
   });
 }
-  /* DELETE SONG */
 
-async function deleteAdminSong(song) {
-  const confirmDelete = confirm(
-    `Are you sure you want to delete "${song.title}"?`
-  );
+/* ADMIN LOGIN */
 
-  if (!confirmDelete) return;
+document.getElementById("loginBtn").onclick = async () => {
+  message.textContent = "Logging in...";
 
-  message.textContent = "Deleting song...";
+  const { data, error } = await db.auth.signInWithPassword({
+    email: document.getElementById("email").value,
+    password: document.getElementById("password").value
+  });
 
-  try {
-    const audioPath = song.audio_url.split(
-      "/storage/v1/object/public/songs/"
-    )[1];
-
-    if (audioPath) {
-      const { error } = await db.storage
-        .from("songs")
-        .remove([decodeURIComponent(audioPath)]);
-
-      if (error) throw error;
-    }
-
-    if (song.cover_url) {
-      const coverPath = song.cover_url.split(
-        "/storage/v1/object/public/songs/"
-      )[1];
-
-      if (coverPath) {
-        const { error } = await db.storage
-          .from("songs")
-          .remove([decodeURIComponent(coverPath)]);
-
-        if (error) throw error;
-      }
-    }
-
-    const { error: dbError } = await db
-      .from("songs")
-      .delete()
-      .eq("id", song.id);
-
-    if (dbError) throw dbError;
-
-    message.textContent = "Song deleted successfully!";
-    loadAdminSongs();
-
-  } catch (error) {
-    message.textContent = "Delete error: " + error.message;
+  if (error) {
+    message.textContent = error.message;
+    return;
   }
-}
+
+  if (data.user.id !== ADMIN_UID) {
+    await db.auth.signOut();
+    message.textContent = "Not authorized.";
+    return;
+  }
+
+  document.getElementById("loginSection").classList.add("hidden");
+  document.getElementById("adminSection").classList.remove("hidden");
+
+  message.textContent = "Welcome, Admin!";
+
+  loadAdminSongs();
 };
+
+/* UPLOAD SONG */
 
 document.getElementById("uploadBtn").onclick = async () => {
   const title = document.getElementById("title").value.trim();
@@ -298,17 +249,23 @@ document.getElementById("uploadBtn").onclick = async () => {
     document.getElementById("audioFile").value = "";
     document.getElementById("coverFile").value = "";
 
+    loadAdminSongs();
+
   } catch (error) {
     message.textContent = "Error: " + error.message;
   } finally {
     button.disabled = false;
   }
+};
 
+/* ADMIN LOGOUT */
 
 document.getElementById("logoutBtn").onclick = async () => {
   await db.auth.signOut();
+
   document.getElementById("adminSection").classList.add("hidden");
   document.getElementById("loginSection").classList.remove("hidden");
+
   message.textContent = "Logged out.";
 };
 </script>
