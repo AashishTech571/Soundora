@@ -129,10 +129,25 @@ function renderSongs() {
     const card = document.createElement("div");
     card.className = "song-item";
 
-    const cover = document.createElement("div");
-    cover.className = "song-art";
-    cover.textContent = "♫";
+  const cover = document.createElement("div");
+cover.className = "song-art";
 
+if (song.cover) {
+  const img = document.createElement("img");
+
+  img.src = song.cover;
+  img.alt = song.title + " cover";
+  img.loading = "lazy";
+
+  img.onerror = () => {
+    img.remove();
+    cover.textContent = "♫";
+  };
+
+  cover.appendChild(img);
+} else {
+  cover.textContent = "♫";
+}
     const info = document.createElement("div");
     info.className = "song-info";
 
