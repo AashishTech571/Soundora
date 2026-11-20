@@ -79,104 +79,7 @@
     <input id="coverFile" type="file" accept="image/*">
 
     <button id="uploadBtn">Upload Song</button>
-    /* LOAD AND DISPLAY UPLOADED SONGS */
-
-async function loadAdminSongs() {
-  const songsList = document.getElementById("songsList");
-
-  songsList.innerHTML = "<p>Loading songs...</p>";
-
-  const { data, error } = await db
-    .from("songs")
-    .select("*")
-    .order("created_at", { ascending: false });
-
-  if (error) {
-    songsList.textContent = "Error: " + error.message;
-    return;
-  }
-
-  songsList.innerHTML = "";
-
-  if (!data.length) {
-    songsList.innerHTML = "<p>No songs uploaded yet.</p>";
-    return;
-  }
-
-  data.forEach(song => {
-    const item = document.createElement("div");
-    item.style.cssText =
-      "padding:12px;margin:10px 0;background:#090910;border:1px solid #393044;border-radius:10px;";
-
-    const name = document.createElement("strong");
-    name.textContent = song.title;
-
-    const artist = document.createElement("p");
-    artist.textContent = song.artist + " • " + song.category;
-
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Delete Song";
-    deleteBtn.style.background = "#a83250";
-
-    deleteBtn.onclick = () => deleteAdminSong(song);
-
-    item.append(name, artist, deleteBtn);
-    songsList.appendChild(item);
-  });
-}
-    /* DELETE SONG */
-
-async function deleteAdminSong(song) {
-  const confirmDelete = confirm(
-    `Are you sure you want to delete "${song.title}"?`
-  );
-
-  if (!confirmDelete) return;
-
-  message.textContent = "Deleting song...";
-
-  try {
-    // Delete audio file from Storage
-    const audioPath = song.audio_url.split("/storage/v1/object/public/songs/")[1];
-
-    if (audioPath) {
-      const { error } = await db.storage
-        .from("songs")
-        .remove([decodeURIComponent(audioPath)]);
-
-      if (error) throw error;
-    }
-
-    // Delete cover image from Storage
-    if (song.cover_url) {
-      const coverPath = song.cover_url.split(
-        "/storage/v1/object/public/songs/"
-      )[1];
-
-      if (coverPath) {
-        const { error } = await db.storage
-          .from("songs")
-          .remove([decodeURIComponent(coverPath)]);
-
-        if (error) throw error;
-      }
-    }
-
-    // Delete song record from database
-    const { error: dbError } = await db
-      .from("songs")
-      .delete()
-      .eq("id", song.id);
-
-    if (dbError) throw dbError;
-
-    message.textContent = "Song deleted successfully!";
-    loadAdminSongs();
-
-  } catch (error) {
-    message.textContent = "Delete error: " + error.message;
-  }
-}
+   
     <button id="logoutBtn">Logout</button>
   </section>
   <hr style="border-color:#302442; margin:25px 0;">
@@ -225,6 +128,58 @@ document.getElementById("loginBtn").onclick = async () => {
   document.getElementById("adminSection").classList.remove("hidden");
   message.textContent = "Welcome, Admin!";
   loadAdminSongs();
+  /* DELETE SONG */
+
+async function deleteAdminSong(song) {
+  const confirmDelete = confirm(
+    `Are you sure you want to delete "${song.title}"?`
+  );
+
+  if (!confirmDelete) return;
+
+  message.textContent = "Deleting song...";
+
+  try {
+    const audioPath = song.audio_url.split(
+      "/storage/v1/object/public/songs/"
+    )[1];
+
+    if (audioPath) {
+      const { error } = await db.storage
+        .from("songs")
+        .remove([decodeURIComponent(audioPath)]);
+
+      if (error) throw error;
+    }
+
+    if (song.cover_url) {
+      const coverPath = song.cover_url.split(
+        "/storage/v1/object/public/songs/"
+      )[1];
+
+      if (coverPath) {
+        const { error } = await db.storage
+          .from("songs")
+          .remove([decodeURIComponent(coverPath)]);
+
+        if (error) throw error;
+      }
+    }
+
+    const { error: dbError } = await db
+      .from("songs")
+      .delete()
+      .eq("id", song.id);
+
+    if (dbError) throw dbError;
+
+    message.textContent = "Song deleted successfully!";
+    loadAdminSongs();
+
+  } catch (error) {
+    message.textContent = "Delete error: " + error.message;
+  }
+}
 };
 
 document.getElementById("uploadBtn").onclick = async () => {
