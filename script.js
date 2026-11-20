@@ -67,7 +67,7 @@ loadSongsFromSupabase();
 /* SONGS DATABASE */
 
 let songs = [];
-];
+
 
 const audio = document.getElementById("audioPlayer");
 const songList = document.getElementById("songList");
