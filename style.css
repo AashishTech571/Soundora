@@ -968,3 +968,52 @@ button[data-category]:hover {
   font-size: 11px;
   font-weight: bold;
 }
+
+/* SOUNDORA ABOUT PAGE */
+
+#aboutPage .about-hero {
+  flex-direction: column;
+  text-align: center;
+  padding: 30px 18px;
+  background: linear-gradient(135deg, #25143d, #10101b);
+}
+
+#aboutPage .about-logo {
+  width: 75px;
+  height: 75px;
+  display: grid;
+  place-items: center;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #a45cff, #55258b);
+  color: white;
+  font-size: 42px;
+  box-shadow: 0 0 25px #8b4dce55;
+}
+
+#aboutPage .about-hero h2 {
+  margin: 12px 0 4px;
+  letter-spacing: 3px;
+}
+
+#aboutPage .about-hero p {
+  color: #bd8cff;
+  font-size: 13px;
+}
+
+#aboutPage .guest-card {
+  margin: 14px 0;
+  padding: 19px;
+}
+
+#aboutPage .guest-card h3 {
+  color: #bd8cff;
+  margin: 0 0 10px;
+  font-size: 16px;
+}
+
+#aboutPage .guest-card p {
+  color: #b9b5c4;
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 3px 0;
+}
