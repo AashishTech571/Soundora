@@ -603,30 +603,47 @@ if (copyGuestIdBtn) {
 /* PROFILE PAGE NAVIGATION */
 
 const profilePage = document.getElementById("profilePage");
-const mainContent = document.querySelector(".main-content");
 const profileNav = document.getElementById("profileNav");
 const homeNav = document.getElementById("homeNav");
 
-profileNav.addEventListener("click", () => {
-  mainContent.style.display = "none";
-  profilePage.hidden = false;
-  profilePage.style.display = "block";
+function showHomePage() {
+  document.querySelectorAll(".main-content").forEach(section => {
+    section.style.display = "";
+  });
+
+  if (profilePage) {
+    profilePage.hidden = true;
+    profilePage.style.display = "none";
+  }
 
   document.querySelectorAll(".nav-item").forEach(btn => {
     btn.classList.remove("active");
   });
 
-  profileNav.classList.add("active");
-});
+  if (homeNav) homeNav.classList.add("active");
+}
 
-homeNav.addEventListener("click", () => {
-  mainContent.style.display = "";
-  profilePage.hidden = true;
-  profilePage.style.display = "none";
+function showProfilePage() {
+  document.querySelectorAll(".main-content").forEach(section => {
+    section.style.display = "none";
+  });
+
+  if (profilePage) {
+    profilePage.hidden = false;
+    profilePage.style.display = "block";
+  }
 
   document.querySelectorAll(".nav-item").forEach(btn => {
     btn.classList.remove("active");
   });
 
-  homeNav.classList.add("active");
-});
+  if (profileNav) profileNav.classList.add("active");
+}
+
+if (profileNav) {
+  profileNav.addEventListener("click", showProfilePage);
+}
+
+if (homeNav) {
+  homeNav.addEventListener("click", showHomePage);
+}
