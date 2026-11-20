@@ -20,23 +20,23 @@
 })();
 /* GUEST PROFILE DISPLAY */
 
-const guestIdDisplay = document.getElementById("guestIdDisplay");
-const copyGuestIdBtn = document.getElementById("copyGuestId");
+const profileGuestId = document.getElementById("guestIdDisplay");
+const profileCopyBtn = document.getElementById("copyGuestId");
 
-if (guestIdDisplay) {
-  guestIdDisplay.textContent = window.SOUNDORA_GUEST_ID;
+if (profileGuestId && window.SOUNDORA_GUEST_ID) {
+  profileGuestId.textContent = window.SOUNDORA_GUEST_ID;
 }
 
-if (copyGuestIdBtn) {
-  copyGuestIdBtn.onclick = async () => {
+if (profileCopyBtn) {
+  profileCopyBtn.addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(window.SOUNDORA_GUEST_ID);
-      copyGuestIdBtn.textContent = "Copied!";
+      profileCopyBtn.textContent = "Copied!";
     } catch (error) {
-      console.error(error);
-      copyGuestIdBtn.textContent = "Copy Failed";
+      console.error("Copy error:", error);
+      profileCopyBtn.textContent = "Copy Failed";
     }
-  };
+  });
 }
 /* SOUNDORA SUPABASE CONNECTION */
 
