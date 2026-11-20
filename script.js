@@ -628,3 +628,30 @@ Object.keys(soundoraNav).forEach(page => {
 });
 
 openSoundoraPage("home");
+
+/* SOUNDORA SETTINGS SYSTEM */
+
+const audioQuality = document.getElementById("audioQuality");
+const autoplaySetting = document.getElementById("autoplaySetting");
+
+// Load saved settings
+if (audioQuality) {
+  audioQuality.value =
+    localStorage.getItem("soundora_quality") || "standard";
+
+  audioQuality.addEventListener("change", () => {
+    localStorage.setItem("soundora_quality", audioQuality.value);
+  });
+}
+
+if (autoplaySetting) {
+  autoplaySetting.checked =
+    localStorage.getItem("soundora_autoplay") === "true";
+
+  autoplaySetting.addEventListener("change", () => {
+    localStorage.setItem(
+      "soundora_autoplay",
+      autoplaySetting.checked
+    );
+  });
+}
