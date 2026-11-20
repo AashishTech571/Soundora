@@ -204,7 +204,24 @@ function playSong(index) {
   document.getElementById("playerArtist").textContent =
     song.artist;
 
-  document.getElementById("playerCover").textContent = "♫";
+  const playerCover = document.getElementById("playerCover");
+
+playerCover.innerHTML = "";
+
+if (song.cover) {
+  const img = document.createElement("img");
+
+  img.src = song.cover;
+  img.alt = song.title + " cover";
+
+  img.onerror = () => {
+    playerCover.textContent = "♫";
+  };
+
+  playerCover.appendChild(img);
+} else {
+  playerCover.textContent = "♫";
+}
 
   updateFavoriteButton();
 
