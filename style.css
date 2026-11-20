@@ -920,3 +920,51 @@ button[data-category]:hover {
   margin-top: 8px;
   word-break: break-all;
 }
+
+/* SOUNDORA SETTINGS DESIGN */
+
+#settingsPage .guest-card {
+  width: 100%;
+  margin: 14px 0;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: linear-gradient(135deg, #191329, #10101b);
+  border: 1px solid #39245a;
+  border-radius: 16px;
+}
+
+#settingsPage .guest-card h3 {
+  font-size: 15px;
+  margin: 0 0 6px;
+  color: #fff;
+}
+
+#settingsPage .guest-card p {
+  font-size: 12px;
+  color: #aaa;
+  margin: 0;
+}
+
+#settingsPage select {
+  background: #25183b;
+  color: white;
+  border: 1px solid #7545a8;
+  border-radius: 9px;
+  padding: 9px;
+  max-width: 115px;
+}
+
+#settingsPage input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #a45cff;
+}
+
+#settingsPage .guest-card span {
+  color: #bd8cff;
+  font-size: 11px;
+  font-weight: bold;
+}
