@@ -895,3 +895,10 @@ button[data-category]:hover {
   display: block;
   border-radius: inherit;
 }
+#playerCover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  display: block;
+}
