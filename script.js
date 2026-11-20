@@ -583,55 +583,48 @@ window.addEventListener("load", () => {
   }, 1200);
 });
 
-/* PROFILE PAGE NAVIGATION */
+/* SOUNDORA PAGE NAVIGATION */
 
-const profilePage = document.getElementById("profilePage");
-const profileNav = document.getElementById("profileNav");
-const homeNav = document.getElementById("homeNav");
+const soundoraMain = document.querySelector("main.main-content");
 
-function showHomePage() {
-  document.querySelectorAll(".main-content").forEach(section => {
+const soundoraPages = {
+  profile: document.getElementById("profilePage"),
+  settings: document.getElementById("settingsPage"),
+  about: document.getElementById("aboutPage")
+};
+
+const soundoraNav = {
+  home: document.getElementById("homeNav"),
+  profile: document.getElementById("profileNav"),
+  settings: document.getElementById("settingsNav"),
+  about: document.getElementById("aboutNav")
+};
+
+function openSoundoraPage(page) {
+  if (!soundoraMain) return;
+
+  Array.from(soundoraMain.children).forEach(section => {
+    const isPage = Object.values(soundoraPages).includes(section);
+
+    section.hidden = page === "home" ? isPage : section !== soundoraPages[page];
     section.style.display = "";
   });
 
-  if (profilePage) {
-    profilePage.hidden = true;
-    profilePage.style.display = "none";
+  Object.values(soundoraNav).forEach(button => {
+    if (button) button.classList.remove("active");
+  });
+
+  if (soundoraNav[page]) {
+    soundoraNav[page].classList.add("active");
   }
-
-  document.querySelectorAll(".nav-item").forEach(btn => {
-    btn.classList.remove("active");
-  });
-
-  if (homeNav) homeNav.classList.add("active");
 }
 
-function showProfilePage() {
-  document.querySelectorAll(".main-content").forEach(section => {
-    section.style.display = "none";
-  });
-
-  if (profilePage) {
-    profilePage.hidden = false;
-    profilePage.style.display = "block";
-    const idElement = document.getElementById("guestIdDisplay");
-
-if (idElement) {
-  idElement.textContent = window.SOUNDORA_GUEST_ID || "ID Not Found";
-}
+Object.keys(soundoraNav).forEach(page => {
+  if (soundoraNav[page]) {
+    soundoraNav[page].addEventListener("click", () => {
+      openSoundoraPage(page);
+    });
   }
+});
 
-  document.querySelectorAll(".nav-item").forEach(btn => {
-    btn.classList.remove("active");
-  });
-
-  if (profileNav) profileNav.classList.add("active");
-}
-
-if (profileNav) {
-  profileNav.addEventListener("click", showProfilePage);
-}
-
-if (homeNav) {
-  homeNav.addEventListener("click", showHomePage);
-}
+openSoundoraPage("home");
