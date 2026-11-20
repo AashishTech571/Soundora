@@ -584,19 +584,20 @@ window.addEventListener("load", () => {
 });
 /* GUEST PROFILE DISPLAY */
 
+const profileGuestId = document.getElementById("guestIdDisplay");
+const profileCopyBtn = document.getElementById("copyGuestId");
 
-
-if (guestIdDisplay) {
-  guestIdDisplay.textContent = window.SOUNDORA_GUEST_ID;
+if (profileGuestId) {
+  profileGuestId.textContent = window.SOUNDORA_GUEST_ID;
 }
 
-if (copyGuestIdBtn) {
-  copyGuestIdBtn.addEventListener("click", async () => {
+if (profileCopyBtn) {
+  profileCopyBtn.addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText(window.SOUNDORA_GUEST_ID);
-      copyGuestIdBtn.textContent = "Copied!";
+      profileCopyBtn.textContent = "Copied!";
     } catch (error) {
-      copyGuestIdBtn.textContent = "Copy failed";
+      profileCopyBtn.textContent = "Copy failed";
     }
   });
 }
