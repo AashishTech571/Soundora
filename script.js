@@ -614,6 +614,11 @@ function showProfilePage() {
   if (profilePage) {
     profilePage.hidden = false;
     profilePage.style.display = "block";
+    const idElement = document.getElementById("guestIdDisplay");
+
+if (idElement) {
+  idElement.textContent = window.SOUNDORA_GUEST_ID || "ID Not Found";
+}
   }
 
   document.querySelectorAll(".nav-item").forEach(btn => {
