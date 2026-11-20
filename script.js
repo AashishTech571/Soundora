@@ -18,6 +18,27 @@
 
   console.log("SOUNDORA Guest ID:", guestId);
 })();
+/* GUEST PROFILE DISPLAY */
+
+document.addEventListener("DOMContentLoaded", () => {
+  const guestIdDisplay = document.getElementById("guestIdDisplay");
+  const copyGuestIdBtn = document.getElementById("copyGuestId");
+
+  if (guestIdDisplay) {
+    guestIdDisplay.textContent = window.SOUNDORA_GUEST_ID;
+  }
+
+  if (copyGuestIdBtn) {
+    copyGuestIdBtn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(window.SOUNDORA_GUEST_ID);
+        copyGuestIdBtn.textContent = "Copied!";
+      } catch (error) {
+        copyGuestIdBtn.textContent = "Copy Failed";
+      }
+    });
+  }
+});
 /* SOUNDORA SUPABASE CONNECTION */
 
 const SUPABASE_URL = "https://muxjlljrdhkpvtdxikmp.supabase.co";
