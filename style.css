@@ -1068,3 +1068,22 @@ body.light-theme #settingsPage .guest-card {
   background: #ffffff;
   border-color: #e1d7ef;
 }
+/* DEVELOPER CARD */
+
+#aboutPage .developer-card {
+  background: linear-gradient(135deg, #25143d, #10101b);
+  border: 1px solid #7545a8;
+  padding: 22px;
+  border-radius: 16px;
+}
+
+#aboutPage .developer-card h3 {
+  color: #bd8cff;
+  margin-bottom: 12px;
+}
+
+#aboutPage .developer-card p {
+  color: #ddd2ed;
+  font-size: 13px;
+  margin: 8px 0;
+}
