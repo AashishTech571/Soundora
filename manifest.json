@@ -1,0 +1,13 @@
+
+{
+  "id": "/",
+  "name": "SOUNDORA",
+  "short_name": "SOUNDORA",
+  "description": "SOUNDORA - Your Music, Your Mood, Your World. Discover and enjoy music in one place.",
+  "start_url": "/Soundora/",
+  "scope": "/Soundora/",
+  "display": "standalone",
+  "background_color": "#0b0712",
+  "theme_color": "#0b0712",
+  "orientation": "portrait"
+}
