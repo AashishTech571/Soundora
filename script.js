@@ -209,7 +209,7 @@ downloadButton.addEventListener("click", async (event) => {
     downloadButton.disabled = true;
     downloadButton.textContent = "...";
 
-    const audioUrl = song.url || song.audio_url || song.audioUrl;
+    const audioUrl = song.audio;
 
     if (!audioUrl) throw new Error("Song URL missing");
 
