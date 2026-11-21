@@ -786,3 +786,25 @@ async function getOfflineSongs() {
     request.onerror = () => reject(request.error);
   });
 }
+/* SOUNDORA OFFLINE SONGS */
+
+async function playOfflineSong(songId) {
+  const offlineSongs = await getOfflineSongs();
+  const song = offlineSongs.find(item => item.id === songId);
+
+  if (!song) {
+    alert("Song not downloaded!");
+    return;
+  }
+
+  const audio = document.getElementById("audioPlayer");
+
+  if (window.offlineAudioURL) {
+    URL.revokeObjectURL(window.offlineAudioURL);
+  }
+
+  window.offlineAudioURL = URL.createObjectURL(song.audio);
+
+  audio.src = window.offlineAudioURL;
+  audio.play();
+}
