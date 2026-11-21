@@ -91,20 +91,8 @@
       <div class="song-list" id="songList"></div>
       <p class="empty-message" id="emptyMessage" hidden>No songs found.</p>
     </section>
-    
-  <footer class="player" id="musicPlayer">
-    <div class="player-top">
-      <div class="player-song">
-        <div class="player-cover" id="playerCover">♫</div>
-        <div class="player-details">
-          <strong id="nowPlaying">Choose a song</strong>
-          <span id="playerArtist">SOUNDORA</span>
-        </div>
-        <button class="favorite-btn" id="favoriteBtn" aria-label="Add to favorites">♡</button>
-      </div>
-      <!-- PROFILE PAGE -->
+    <!-- PROFILE PAGE -->
 <section id="profilePage" hidden>
-
   <section class="section">
     <p class="eyebrow">YOUR ACCOUNT</p>
     <h2>My Profile</h2>
@@ -114,16 +102,14 @@
       <div>
         <h3>SOUNDORA Guest</h3>
         <p>Guest Mode · Active</p>
-       <div id="guestIdDisplay" style="display:block !important; visibility:visible !important; opacity:1 !important; color:#bd8cff !important; font-size:16px !important; font-weight:bold !important; margin-top:10px;">
-  Loading ID...
-</div>
+        <strong id="guestIdDisplay">Loading ID...</strong>
       </div>
       <button id="copyGuestId">Copy ID</button>
     </div>
   </section>
-
 </section>
-  
+
+
 <!-- SETTINGS PAGE -->
 <section id="settingsPage" hidden>
   <section class="section">
@@ -207,7 +193,19 @@
     </div>
   </section>
 </section>
-
+    </main>
+    
+  <footer class="player" id="musicPlayer">
+    <div class="player-top">
+      <div class="player-song">
+        <div class="player-cover" id="playerCover">♫</div>
+        <div class="player-details">
+          <strong id="nowPlaying">Choose a song</strong>
+          <span id="playerArtist">SOUNDORA</span>
+        </div>
+        <button class="favorite-btn" id="favoriteBtn" aria-label="Add to favorites">♡</button>
+      </div>
+     
 </main>
  
     
