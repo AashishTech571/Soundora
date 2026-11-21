@@ -1087,3 +1087,21 @@ body.light-theme #settingsPage .guest-card {
   font-size: 13px;
   margin: 8px 0;
 }
+/* SOUNDORA OFFLINE DOWNLOAD BUTTON */
+
+.song-download {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border: 1px solid #7545a8;
+  border-radius: 10px;
+  background: #25143d;
+  color: #d8b4fe;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.song-download:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
