@@ -655,3 +655,21 @@ if (autoplaySetting) {
     );
   });
 }
+/* SOUNDORA AUTOPLAY SYSTEM */
+
+const soundoraAudio = document.getElementById("audioPlayer");
+
+if (soundoraAudio) {
+  soundoraAudio.addEventListener("ended", () => {
+    const autoplayEnabled =
+      localStorage.getItem("soundora_autoplay") === "true";
+
+    if (autoplayEnabled) {
+      const nextButton = document.getElementById("nextBtn");
+
+      if (nextButton) {
+        nextButton.click();
+      }
+    }
+  });
+}
