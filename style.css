@@ -1105,3 +1105,27 @@ body.light-theme #settingsPage .guest-card {
   opacity: 0.6;
   cursor: wait;
 }
+/* SOUNDORA DOWNLOADS DESIGN */
+
+#offlineSongList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+#offlineSongList .song-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px;
+  background: linear-gradient(135deg, #191329, #10101b);
+  border: 1px solid #39245a;
+  border-radius: 14px;
+}
+
+#offlineEmpty {
+  color: #aaa;
+  font-size: 13px;
+  margin-top: 15px;
+}
