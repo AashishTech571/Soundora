@@ -197,7 +197,41 @@ if (song.cover) {
       }
     });
 
-    card.append(cover, info, button);
+    const downloadButton = document.createElement("button");
+downloadButton.className = "song-download";
+downloadButton.textContent = "↓";
+downloadButton.title = "Download for offline";
+
+downloadButton.addEventListener("click", async (event) => {
+  event.stopPropagation();
+
+  try {
+    downloadButton.disabled = true;
+    downloadButton.textContent = "...";
+
+    const audioUrl = song.url || song.audio_url || song.audioUrl;
+
+    if (!audioUrl) throw new Error("Song URL missing");
+
+    const response = await fetch(audioUrl);
+    if (!response.ok) throw new Error("Download failed");
+
+    const audioBlob = await response.blob();
+
+    await saveOfflineSong(song, audioBlob);
+
+    downloadButton.textContent = "✓";
+    alert("Song saved for offline listening!");
+  } catch (error) {
+    console.error(error);
+    alert("Song download failed!");
+    downloadButton.textContent = "↓";
+  } finally {
+    downloadButton.disabled = false;
+  }
+});
+
+card.append(cover, info, button, downloadButton);
 
     card.addEventListener("click", event => {
       if (event.target !== button) {
@@ -697,5 +731,58 @@ if (themeSetting) {
       "light-theme",
       selectedTheme === "light"
     );
+  });
+}
+/* SOUNDORA OFFLINE STORAGE */
+
+const DB_NAME = "SOUNDORA_OFFLINE";
+const STORE_NAME = "downloads";
+
+function openOfflineDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(DB_NAME, 1);
+
+    request.onupgradeneeded = () => {
+      const db = request.result;
+
+      if (!db.objectStoreNames.contains(STORE_NAME)) {
+        db.createObjectStore(STORE_NAME, { keyPath: "id" });
+      }
+    };
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function saveOfflineSong(song, audioBlob) {
+  const db = await openOfflineDB();
+
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(STORE_NAME, "readwrite");
+
+    transaction.objectStore(STORE_NAME).put({
+      id: song.id,
+      title: song.title,
+      artist: song.artist,
+      category: song.category,
+      audio: audioBlob,
+      cover: song.cover || song.cover_url || ""
+    });
+
+    transaction.oncomplete = () => resolve(true);
+    transaction.onerror = () => reject(transaction.error);
+  });
+}
+
+async function getOfflineSongs() {
+  const db = await openOfflineDB();
+
+  return new Promise((resolve, reject) => {
+    const request = db.transaction(STORE_NAME)
+      .objectStore(STORE_NAME).getAll();
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
   });
 }
