@@ -1017,3 +1017,54 @@ button[data-category]:hover {
   line-height: 1.7;
   margin: 3px 0;
 }
+/* SOUNDORA LIGHT THEME */
+
+body.light-theme {
+  background: #f4f1fa;
+  color: #211a2b;
+}
+
+body.light-theme .main-content {
+  background: #f4f1fa;
+  color: #211a2b;
+}
+
+body.light-theme .section,
+body.light-theme .guest-card,
+body.light-theme .song-item {
+  background: #ffffff;
+  color: #211a2b;
+  border-color: #e1d7ef;
+}
+
+body.light-theme .guest-card h3,
+body.light-theme .section h2 {
+  color: #211a2b;
+}
+
+body.light-theme .guest-card p {
+  color: #655b70;
+}
+
+body.light-theme .topbar,
+body.light-theme .player,
+body.light-theme .bottom-nav {
+  background: #ffffff;
+  color: #211a2b;
+  border-color: #e1d7ef;
+}
+
+body.light-theme .search-box {
+  background: #ffffff;
+  border-color: #d8c9e8;
+}
+
+body.light-theme input,
+body.light-theme select {
+  color: #211a2b;
+}
+
+body.light-theme #settingsPage .guest-card {
+  background: #ffffff;
+  border-color: #e1d7ef;
+}
