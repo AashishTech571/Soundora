@@ -808,3 +808,53 @@ async function playOfflineSong(songId) {
   audio.src = window.offlineAudioURL;
   audio.play();
 }
+/* SOUNDORA MY DOWNLOADS */
+
+const viewDownloadsBtn = document.getElementById("viewDownloadsBtn");
+
+if (viewDownloadsBtn) {
+  viewDownloadsBtn.addEventListener("click", async () => {
+    const list = document.getElementById("offlineSongList");
+    const empty = document.getElementById("offlineEmpty");
+
+    list.innerHTML = "<p>Loading downloads...</p>";
+
+    try {
+      const downloadedSongs = await getOfflineSongs();
+
+      list.innerHTML = "";
+      empty.hidden = downloadedSongs.length !== 0;
+
+      downloadedSongs.forEach(song => {
+        const item = document.createElement("div");
+        item.className = "song-item";
+
+        const info = document.createElement("div");
+        info.className = "song-info";
+
+        const title = document.createElement("strong");
+        title.textContent = song.title;
+
+        const artist = document.createElement("span");
+        artist.textContent = song.artist;
+
+        info.append(title, artist);
+
+        const playBtn = document.createElement("button");
+        playBtn.className = "song-play";
+        playBtn.textContent = "▶";
+
+        playBtn.addEventListener("click", () => {
+          playOfflineSong(song.id);
+        });
+
+        item.append(info, playBtn);
+        list.appendChild(item);
+      });
+
+    } catch (error) {
+      console.error(error);
+      list.textContent = "Unable to load downloads.";
+    }
+  });
+}
