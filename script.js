@@ -673,3 +673,29 @@ if (soundoraAudio) {
     }
   });
 }
+/* SOUNDORA THEME SYSTEM */
+
+const themeSetting = document.getElementById("themeSetting");
+
+if (themeSetting) {
+  const savedTheme =
+    localStorage.getItem("soundora_theme") || "dark";
+
+  themeSetting.value = savedTheme;
+
+  document.body.classList.toggle(
+    "light-theme",
+    savedTheme === "light"
+  );
+
+  themeSetting.addEventListener("change", () => {
+    const selectedTheme = themeSetting.value;
+
+    localStorage.setItem("soundora_theme", selectedTheme);
+
+    document.body.classList.toggle(
+      "light-theme",
+      selectedTheme === "light"
+    );
+  });
+}
