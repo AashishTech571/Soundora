@@ -858,3 +858,17 @@ if (viewDownloadsBtn) {
     }
   });
 }
+/* SOUNDORA SERVICE WORKER */
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/Soundora/sw.js")
+      .then(() => {
+        console.log("SOUNDORA Offline Support Ready!");
+      })
+      .catch(error => {
+        console.error("Service Worker Error:", error);
+      });
+  });
+}
