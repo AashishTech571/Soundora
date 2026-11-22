@@ -1,13 +1,25 @@
 
 {
-  "id": "/",
+  "id": "/Soundora/",
   "name": "SOUNDORA",
   "short_name": "SOUNDORA",
-  "description": "SOUNDORA - Your Music, Your Mood, Your World. Discover and enjoy music in one place.",
+  "description": "SOUNDORA - Your Music, Your Mood, Your World.",
   "start_url": "/Soundora/",
   "scope": "/Soundora/",
   "display": "standalone",
   "background_color": "#0b0712",
   "theme_color": "#0b0712",
-  "orientation": "portrait"
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/Soundora/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/Soundora/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
